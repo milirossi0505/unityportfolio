@@ -84,3 +84,33 @@ public class TouchMovement : MonoBehaviour
         }
     }
 }
+public class CameraZoom : MonoBehaviour
+{
+    public float zoomSpeed = 2f;   // Velocidad de zoom
+    public float minDistance = 5f; // Distancia mínima de la cámara
+    public float maxDistance = 20f; // Distancia máxima de la cámara
+
+    private float currentDistance; // Distancia actual de la cámara
+
+    void Start()
+    {
+        // Inicializa la distancia de la cámara
+        currentDistance = Vector3.Distance(transform.position, Camera.main.transform.position);
+    }
+
+    void Update()
+    {
+        // Detectar la entrada de la rueda del ratón
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+
+        // Cambiar la distancia de la cámara según la rueda del ratón
+        currentDistance -= scrollInput * zoomSpeed;
+
+        // Limitar la distancia de la cámara
+        currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
+
+        // Actualizar la posición de la cámara
+        Vector3 direction = transform.forward * currentDistance;
+        Camera.main.transform.position = direction;
+    }
+}
