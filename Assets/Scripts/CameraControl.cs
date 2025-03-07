@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    public static bool CustomOrientation;
     public Transform target;  // El objeto alrededor del cual rotará la cámara
     public float distance = 10f;  // Distancia inicial de la cámara desde el objeto
     public float height = 5f;  // Altura inicial de la cámara
@@ -15,6 +16,7 @@ public class CameraControl : MonoBehaviour
 
     void Start()
     {
+        CustomOrientation = false;
         // Establecer la posición inicial de la cámara con base en la distancia y altura
         offset = new Vector3(0, height, -distance);
         transform.position = target.position + offset;
@@ -23,6 +25,14 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
+        if (CustomOrientation) 
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) 
+            {
+                CustomOrientation = false;
+            }
+            return;
+        }
         // Movimiento y rotación de la cámara
         if (Input.GetMouseButton(0))
         {
